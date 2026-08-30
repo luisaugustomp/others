@@ -838,17 +838,20 @@ document.querySelectorAll('#library-filters .nav-pill').forEach(p => {
 
 $('search-input').addEventListener('input', () => { S.query=$('search-input').value; renderGenres(); });
 
-$('theme-toggle').addEventListener('click', () => {
-  const dark = document.documentElement.getAttribute('data-theme')==='dark';
-  document.documentElement.setAttribute('data-theme',dark?'light':'dark');
-  $('theme-toggle').innerHTML = dark?'<i class="fa-solid fa-moon"></i>':'<i class="fa-solid fa-sun"></i>';
-  localStorage.setItem('backlog_theme',dark?'light':'dark');
-});
+const themeToggleBtn = $('theme-toggle');
+if (themeToggleBtn) {
+  themeToggleBtn.addEventListener('click', () => {
+    const dark = document.documentElement.getAttribute('data-theme')==='dark';
+    document.documentElement.setAttribute('data-theme', dark ? 'light' : 'dark');
+    themeToggleBtn.innerHTML = dark ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
+    localStorage.setItem('backlog_theme', dark ? 'light' : 'dark');
+  });
 
-const savedTheme = localStorage.getItem('backlog_theme');
-if (savedTheme) {
-  document.documentElement.setAttribute('data-theme',savedTheme);
-  $('theme-toggle').innerHTML = savedTheme==='dark'?'<i class="fa-solid fa-sun"></i>':'<i class="fa-solid fa-moon"></i>';
+  const savedTheme = localStorage.getItem('backlog_theme');
+  if (savedTheme) {
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    themeToggleBtn.innerHTML = savedTheme==='dark' ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+  }
 }
 
 // ── BUTTON WIRING ─────────────────────────────

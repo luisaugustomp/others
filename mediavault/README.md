@@ -27,13 +27,11 @@ Uma aplicação web moderna com estética **Neo-Brutalista** para organizar e ge
 
 ```
 mediavault/
-├── index.html           # V1: Neo-Brutalismo (alto contraste, bordas pretas 3px)
-├── style.css            # CSS Neo-Brutalista
-├── v2.html              # V2: Steam Client / Steam Deck UI
-├── style-v2.css         # CSS Steam (Dark Slate Navy `#1b2838`, Steam Blue `#66c0f4`, Play Green `#a4d007`)
-├── v3.html              # V3: PlayStation Official / PS5 Store UI
-├── style-v3.css         # CSS PlayStation (Deep Blue `#0070d1`, PS Store minimalista e elegante)
-├── app.js               # Lógica da aplicação, Supabase SDK e Gemini AI (compartilhada por todas as versões)
+├── index.html           # Modo Claro (estética Neo-Brutalista)
+├── style.css            # CSS Neo-Brutalista Light Mode
+├── v2.html              # Modo Noturno (estética oficial Steam Client)
+├── style-v2.css         # CSS Steam Dark Mode (`#171a21` / `#1b2838` / `#66c0f4`)
+├── app.js               # Lógica da aplicação, Supabase SDK e Gemini AI (compartilhada)
 ├── supabase_schema.sql  # Script de criação do banco de dados (tabelas e RLS)
 └── README.md            # Documentação do projeto
 ```

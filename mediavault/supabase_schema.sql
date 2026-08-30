@@ -56,16 +56,12 @@ CREATE TRIGGER settings_updated_at
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at_column();
 
--- 4. Row Level Security (RLS)
-ALTER TABLE games ENABLE ROW LEVEL SECURITY;
+-- 4. Unrestricted Access (RLS Desabilitado em todas as tabelas)
+ALTER TABLE games DISABLE ROW LEVEL SECURITY;
+ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
+
+-- Remove políticas antigas se existirem
 DROP POLICY IF EXISTS "Allow all for anon on games" ON games;
 DROP POLICY IF EXISTS "Allow all for anon" ON games;
-CREATE POLICY "Allow all for anon on games"
-  ON games FOR ALL TO anon
-  USING (true) WITH CHECK (true);
-
-ALTER TABLE settings ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "Allow all for anon on settings" ON settings;
-CREATE POLICY "Allow all for anon on settings"
-  ON settings FOR ALL TO anon
-  USING (true) WITH CHECK (true);
+DROP POLICY IF EXISTS "Allow all for anon" ON settings;

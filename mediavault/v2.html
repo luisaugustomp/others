@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MEDIAVAULT — Bento Edition</title>
-  <meta name="description" content="Gerenciador moderno de backlog de jogos em estilo Bento Grid." />
+  <title>MEDIAVAULT // Cyberpunk Edition</title>
+  <meta name="description" content="Gerenciador de backlog de jogos em estilo Cyberpunk 2077 Night City." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
@@ -17,37 +17,37 @@
 <div id="supabase-banner">
   <div>
     <i class="fa-solid fa-triangle-exclamation"></i>
-    <span>&nbsp;<strong>Supabase não conectado:</strong> Configure suas credenciais para sincronizar seus jogos e chaves no banco de dados.</span>
+    <span>&nbsp;<strong>[CRITICAL WARNING]:</strong> Supabase Desconectado. Configure suas credenciais de rede.</span>
   </div>
-  <button id="banner-config-btn"><i class="fa-solid fa-gear"></i> Configurar</button>
+  <button id="banner-config-btn"><i class="fa-solid fa-bolt"></i> Conectar</button>
 </div>
 
 <!-- LOADING -->
 <div id="loading-overlay">
   <div class="loader-title">MEDIAVAULT</div>
-  <div class="loader-sub">Sincronizando com Supabase...</div>
+  <div class="loader-sub">[INITIALIZING NEURAL LINK WITH SUPABASE...]</div>
 </div>
 
 <!-- HEADER -->
 <header id="site-header">
   <div class="header-inner">
     <a href="#" class="site-logo" id="logo-home-btn">
-      <i class="fa-solid fa-shapes" style="font-size: 1.4rem; color: var(--accent-brand);"></i>
+      <i class="fa-solid fa-gamepad" style="font-size: 1.4rem; color: var(--cp-yellow);"></i>
       MEDIAVAULT
     </a>
-    <span class="header-tagline">Bento Edition</span>
+    <span class="header-tagline">NIGHT CITY<br>// NETRUNNER SHARDS</span>
 
     <div class="search-wrap">
       <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="text" id="search-input" placeholder="Buscar jogo..." aria-label="Buscar jogo" />
+      <input type="text" id="search-input" placeholder="SCANNING SHARDS..." aria-label="Buscar jogo" />
     </div>
 
     <nav class="nav-pills" aria-label="Navegação principal">
       <button class="nav-pill active" id="nav-backlog" data-view="backlog">
-        <i class="fa-solid fa-gamepad"></i> Backlog
+        <i class="fa-solid fa-microchip"></i> Backlog
       </button>
       <button class="nav-pill" id="nav-library" data-view="library">
-        <i class="fa-solid fa-book"></i> Biblioteca
+        <i class="fa-solid fa-database"></i> Biblioteca
       </button>
     </nav>
 
@@ -56,10 +56,10 @@
     </a>
 
     <button class="header-btn" id="config-btn" title="Configurações e Chaves" aria-label="Configurações">
-      <i class="fa-solid fa-gear"></i>
+      <i class="fa-solid fa-sliders"></i>
     </button>
     <button class="header-btn" id="theme-toggle" title="Alternar tema" aria-label="Alternar tema">
-      <i class="fa-solid fa-moon"></i>
+      <i class="fa-solid fa-sun"></i>
     </button>
   </div>
 </header>
@@ -71,33 +71,33 @@
   <div id="backlog-section" class="active">
     <section id="focus-section">
       <div class="section-label">
-        <i class="fa-solid fa-crosshairs"></i> Jogando Agora
+        <i class="fa-solid fa-bolt"></i> DUAL CYBER_DECK // SLOTS ATIVOS
       </div>
       <h1 class="section-heading">FOCO ATUAL</h1>
       <div class="focus-grid" id="focus-grid"></div>
       <div class="focus-actions">
         <button class="btn btn-accent btn-lg" id="pick-two-btn">
-          <i class="fa-solid fa-shuffle"></i> Trocar Sugestões
+          <i class="fa-solid fa-arrows-rotate"></i> Trocar Sugestões
         </button>
       </div>
     </section>
 
     <div id="genre-sections"></div>
-    <div id="no-results"><i class="fa-solid fa-circle-xmark"></i><p>Nenhum jogo encontrado para "<span id="no-results-query"></span>"</p></div>
+    <div id="no-results"><i class="fa-solid fa-ban"></i><p>[NENHUM SHARD ENCONTRADO PARA "<span id="no-results-query"></span>"]</p></div>
     <div id="empty-state" class="empty-state" style="display:none;">
-      <i class="fa-solid fa-box-open"></i>
-      <h3>Backlog Vazio</h3>
-      <p>Nenhum jogo cadastrado no seu banco Supabase. Adicione seus primeiros jogos clicando no botão abaixo.</p>
-      <button class="btn btn-accent btn-lg" id="empty-add-btn"><i class="fa-solid fa-plus"></i> Adicionar Jogo</button>
+      <i class="fa-solid fa-hard-drive"></i>
+      <h3>Deck Vazio</h3>
+      <p>Nenhum jogo inserido no seu banco Supabase. Conecte novos cartuchos clicando abaixo.</p>
+      <button class="btn btn-accent btn-lg" id="empty-add-btn"><i class="fa-solid fa-plus"></i> Inserir Shard</button>
     </div>
   </div>
 
   <!-- LIBRARY VIEW -->
   <div id="library-section">
-    <div class="section-label"><i class="fa-solid fa-book"></i> Biblioteca Completa</div>
+    <div class="section-label"><i class="fa-solid fa-database"></i> SHARDS_REGISTRY // TODOS OS REGISTROS</div>
     <h2 class="section-heading">TODOS OS JOGOS</h2>
     <div id="library-filters" class="nav-pills" style="margin-bottom:28px;flex-wrap:wrap;">
-      <button class="nav-pill active" data-filter="all">Todos</button>
+      <button class="nav-pill active" data-filter="all">TODOS</button>
       <button class="nav-pill" data-filter="backlog"><i class="fa-solid fa-circle" style="color:var(--s-backlog); font-size: 0.65rem;"></i> Backlog</button>
       <button class="nav-pill" data-filter="playing"><i class="fa-solid fa-circle" style="color:var(--s-playing); font-size: 0.65rem;"></i> Jogando</button>
       <button class="nav-pill" data-filter="completed"><i class="fa-solid fa-circle" style="color:var(--s-completed); font-size: 0.65rem;"></i> Completado</button>
@@ -112,9 +112,9 @@
 <!-- FABS -->
 <div class="fab-group">
   <button class="fab fab-ai" id="ai-sort-btn" title="Reorganizar por IA">
-    <i class="fa-solid fa-wand-magic-sparkles"></i> Reorganizar por IA
+    <i class="fa-solid fa-wand-magic-sparkles"></i> AI Reorder
   </button>
-  <button class="fab" id="add-game-btn" title="Adicionar jogo">
+  <button class="fab" id="add-game-btn" title="Inserir Novo Jogo">
     <i class="fa-solid fa-plus"></i>
   </button>
 </div>
@@ -125,19 +125,19 @@
 <div class="modal-overlay" id="add-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="add-modal-title">
   <div class="modal">
     <div class="modal-header">
-      <h2 class="modal-title" id="add-modal-title">Novo Jogo</h2>
+      <h2 class="modal-title" id="add-modal-title">// INSERIR SHARD</h2>
       <button class="modal-close" id="add-modal-close" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="modal-body">
       <form id="add-game-form" novalidate>
         <div class="form-group">
-          <label class="form-label" for="form-title">Título do Jogo *</label>
-          <input type="text" class="form-input" id="form-title" placeholder="Ex: Resident Evil 4 Remake" required />
+          <label class="form-label" for="form-title">TÍTULO DO JOGO *</label>
+          <input type="text" class="form-input" id="form-title" placeholder="Ex: Cyberpunk 2077" required />
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label" for="form-genre">Gênero *</label>
-            <input type="text" class="form-input" id="form-genre" placeholder="Ex: Survival Horror" list="genre-suggestions" required />
+            <label class="form-label" for="form-genre">GÊNERO *</label>
+            <input type="text" class="form-input" id="form-genre" placeholder="Ex: RPG / Action" list="genre-suggestions" required />
             <datalist id="genre-suggestions">
               <option value="Action"><option value="Action-Adventure"><option value="Fighting">
               <option value="FPS"><option value="Horror"><option value="JRPG">
@@ -148,8 +148,8 @@
             </datalist>
           </div>
           <div class="form-group">
-            <label class="form-label" for="form-platform">Plataforma</label>
-            <input type="text" class="form-input" id="form-platform" placeholder="Ex: PS5" list="platform-suggestions" />
+            <label class="form-label" for="form-platform">PLATAFORMA</label>
+            <input type="text" class="form-input" id="form-platform" placeholder="Ex: PC / PS5" list="platform-suggestions" />
             <datalist id="platform-suggestions">
               <option value="PC"><option value="PS4"><option value="PS5">
               <option value="Xbox One"><option value="Xbox Series X"><option value="Nintendo Switch">
@@ -158,26 +158,26 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">Tags de Similaridade</label>
+          <label class="form-label">TAGS DE SIMILARIDADE</label>
           <div class="tags-wrap" id="tags-wrap">
-            <input type="text" class="tag-input" id="tag-input" placeholder="Ex: horror, survival (Enter para adicionar)" />
+            <input type="text" class="tag-input" id="tag-input" placeholder="Ex: cyberpunk, rpg, open-world (Enter para adicionar)" />
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label" for="form-weight">Intensidade</label>
+          <label class="form-label" for="form-weight">NÍVEL DE INTENSIDADE</label>
           <select class="form-select" id="form-weight">
-            <option value="heavy">Pesado (intenso, longo, exige concentração)</option>
-            <option value="medium" selected>Médio</option>
-            <option value="light">Leve (casual, relaxante, sessões curtas)</option>
+            <option value="heavy">[HEAVY] — Intenso / Foco Máximo / Imersivo</option>
+            <option value="medium" selected>[MEDIUM] — Equilibrado</option>
+            <option value="light">[LIGHT] — Casual / Chill / Sessão Rápida</option>
           </select>
         </div>
         <div class="form-group">
-          <label class="form-label" for="form-cover">URL da Capa</label>
+          <label class="form-label" for="form-cover">URL DA BOXART</label>
           <input type="url" class="form-input" id="form-cover" placeholder="https://..." />
           <img id="cover-preview-img" alt="Preview da capa" />
         </div>
         <div class="form-group">
-          <label class="form-label" for="form-status">Status</label>
+          <label class="form-label" for="form-status">STATUS NO BANCO</label>
           <select class="form-select" id="form-status">
             <option value="backlog">Backlog</option>
             <option value="playing">Jogando</option>
@@ -187,13 +187,13 @@
           </select>
         </div>
         <div class="form-group">
-          <label class="form-label" for="form-notes">Notas Pessoais</label>
-          <textarea class="form-textarea" id="form-notes" placeholder="Suas impressões, onde parou, etc."></textarea>
+          <label class="form-label" for="form-notes">LOGS & ANOTAÇÕES</label>
+          <textarea class="form-textarea" id="form-notes" placeholder="Logs de progresso, impressões, etc."></textarea>
         </div>
         <div class="form-footer">
           <button type="button" class="btn" id="add-modal-cancel">Cancelar</button>
           <button type="submit" class="btn btn-accent btn-lg" id="save-game-btn">
-            <i class="fa-solid fa-floppy-disk"></i> Salvar no Supabase
+            <i class="fa-solid fa-floppy-disk"></i> Gravar no Supabase
           </button>
         </div>
       </form>
@@ -205,7 +205,7 @@
 <div class="modal-overlay" id="detail-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="detail-modal-title">
   <div class="modal modal-lg">
     <div class="modal-header">
-      <h2 class="modal-title" id="detail-modal-title">Detalhes</h2>
+      <h2 class="modal-title" id="detail-modal-title">// SHARD DATA</h2>
       <button class="modal-close" id="detail-modal-close" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="modal-body">
@@ -218,11 +218,11 @@
           <h3 id="detail-title" class="detail-title"></h3>
           <div class="detail-meta" id="detail-meta"></div>
           <div id="detail-notes-wrap" style="display:none;">
-            <div class="form-label" style="margin-bottom:6px;">Notas</div>
+            <div class="form-label" style="margin-bottom:6px;">LOGS DE DADOS</div>
             <div id="detail-notes" class="detail-notes"></div>
           </div>
           <div>
-            <div class="form-label" style="margin-bottom:8px;">Alterar Status (Supabase)</div>
+            <div class="form-label" style="margin-bottom:8px;">STATUS DO JOGO (SUPABASE)</div>
             <div class="status-picker" id="status-picker">
               <button class="status-btn" data-status="backlog"><i class="fa-solid fa-clock"></i> Backlog</button>
               <button class="status-btn" data-status="playing"><i class="fa-solid fa-play"></i> Jogando</button>
@@ -232,7 +232,7 @@
             </div>
           </div>
           <div class="detail-actions">
-            <button class="btn btn-accent" id="detail-set-focus-btn"><i class="fa-solid fa-crosshairs"></i> Colocar em Foco</button>
+            <button class="btn btn-accent" id="detail-set-focus-btn"><i class="fa-solid fa-bolt"></i> Inserir no Foco</button>
             <button class="btn" id="detail-edit-btn"><i class="fa-solid fa-pen"></i> Editar</button>
             <button class="btn btn-danger" id="detail-delete-btn"><i class="fa-solid fa-trash"></i> Excluir</button>
           </div>
@@ -246,38 +246,38 @@
 <div class="modal-overlay" id="ai-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="ai-modal-title">
   <div class="modal">
     <div class="modal-header">
-      <h2 class="modal-title" id="ai-modal-title">Reorganizar por IA</h2>
+      <h2 class="modal-title" id="ai-modal-title">// NEURAL REORDER</h2>
       <button class="modal-close" id="ai-modal-close" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="modal-body">
-      <div id="ai-thinking-state" class="ai-thinking" style="display:none; text-align:center; padding: 24px; color: var(--accent-brand);">
+      <div id="ai-thinking-state" class="ai-thinking" style="display:none; text-align:center; padding: 24px; color: var(--cp-yellow);">
         <i class="fa-solid fa-spinner fa-spin fa-2x" style="margin-bottom: 12px; display:block;"></i>
-        Reorganizando jogos por similaridade com Gemini AI...
+        [RUNNING NEURAL ALGORITHM WITH GEMINI AI...]
       </div>
       <div id="ai-idle-state">
-        <p style="font-size:0.9rem; color:var(--text-secondary); margin-bottom:18px; line-height: 1.5;">
-          O Gemini vai analisar os jogos do seu Supabase e reorganizá-los por afinidade temática. A nova ordem e sua chave são salvas diretamente no Supabase.
+        <p style="font-size:0.9rem; color:var(--text-dim); margin-bottom:18px; line-height: 1.5;">
+          A inteligência artificial vai reorganizar seus shards por afinidade de jogabilidade. As chaves e dados são salvos no seu Supabase.
         </p>
         <div class="form-group">
-          <label class="form-label" for="ai-key-input">Gemini API Key (Salva no Supabase)</label>
+          <label class="form-label" for="ai-key-input">GEMINI API KEY [SUPABASE SETTINGS]</label>
           <input type="password" class="form-input" id="ai-key-input" placeholder="AIzaSy..." />
-          <small style="font-size:0.75rem; color:var(--text-tertiary); margin-top:6px; display:block;">
-            <i class="fa-solid fa-cloud"></i> Sincronizada na tabela <code>settings</code> do seu Supabase.
+          <small style="font-size:0.75rem; color:var(--text-dim); margin-top:6px; display:block;">
+            <i class="fa-solid fa-lock"></i> Chave sincronizada na tabela <code>settings</code> do Supabase.
           </small>
         </div>
         <div class="form-footer">
           <button class="btn" id="ai-modal-cancel">Cancelar</button>
           <button class="btn btn-purple btn-lg" id="ai-run-btn">
-            <i class="fa-solid fa-wand-magic-sparkles"></i> Reorganizar Agora
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Executar Reordenação
           </button>
         </div>
       </div>
       <div id="ai-result-state" style="display:none;">
-        <p style="font-size:0.88rem; font-weight:700; color:var(--text-primary); margin-bottom:8px;">Nova ordem sugerida pela IA:</p>
+        <p style="font-size:0.88rem; font-weight:700; color:var(--cp-yellow); margin-bottom:8px;">// SEQUÊNCIA SUGERIDA PELA IA:</p>
         <ul class="ai-result-list" id="ai-result-list" style="list-style:none; display:flex; flex-direction:column; gap:8px;"></ul>
         <div class="form-footer">
           <button class="btn" id="ai-result-cancel">Cancelar</button>
-          <button class="btn btn-accent btn-lg" id="ai-apply-btn"><i class="fa-solid fa-check"></i> Salvar Ordem no Supabase</button>
+          <button class="btn btn-accent btn-lg" id="ai-apply-btn"><i class="fa-solid fa-check"></i> Gravar no Supabase</button>
         </div>
       </div>
     </div>
@@ -288,23 +288,23 @@
 <div class="modal-overlay" id="config-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="config-modal-title">
   <div class="modal">
     <div class="modal-header">
-      <h2 class="modal-title" id="config-modal-title">Configurações</h2>
+      <h2 class="modal-title" id="config-modal-title">// SYSTEM CONFIG</h2>
       <button class="modal-close" id="config-modal-close" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="modal-body">
       <form id="config-form">
         <div class="form-group">
-          <label class="form-label" for="cfg-supabase-url">Supabase Project URL *</label>
+          <label class="form-label" for="cfg-supabase-url">SUPABASE PROJECT URL *</label>
           <input type="url" class="form-input" id="cfg-supabase-url" placeholder="https://xyzcompany.supabase.co" required />
         </div>
         <div class="form-group">
-          <label class="form-label" for="cfg-supabase-key">Supabase Anon Key *</label>
+          <label class="form-label" for="cfg-supabase-key">SUPABASE ANON KEY *</label>
           <input type="password" class="form-input" id="cfg-supabase-key" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." required />
         </div>
         <div class="form-group">
-          <label class="form-label" for="cfg-gemini-key">Gemini AI API Key (Opcional)</label>
+          <label class="form-label" for="cfg-gemini-key">GEMINI AI API KEY (OPCIONAL)</label>
           <input type="password" class="form-input" id="cfg-gemini-key" placeholder="AIzaSy..." />
-          <small style="font-size:0.75rem; color:var(--text-tertiary); margin-top:4px; display:block;">
+          <small style="font-size:0.75rem; color:var(--text-dim); margin-top:4px; display:block;">
             <i class="fa-solid fa-database"></i> A chave da IA é sincronizada na tabela <code>settings</code> do Supabase.
           </small>
         </div>

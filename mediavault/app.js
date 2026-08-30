@@ -620,42 +620,94 @@ $('ai-run-btn').addEventListener('click', async () => {
   const list = pool.map((g,i)=>`${i+1}. "${g.title}" — Gênero: ${g.genre}, Tags: ${(g.tags||[]).join(', ')||'nenhuma'}`).join('\n');
   const prompt = `Você é um especialista em videogames. Aqui está minha lista de backlog:\n\n${list}\n\nReorganize agrupando jogos com temas e estilos similares próximos uns dos outros (survival horror juntos, RPGs juntos, jogos casuais juntos, etc.).\nResponda SOMENTE com JSON válido: {"order": [lista de números na nova ordem]}\nExemplo: {"order": [3, 1, 5, 2, 4]}`;
   
-  const candidateModels = [
+  let successData = null;
+  let lastError = null;
+
+  // 1. Tenta listar dinamicamente os modelos disponíveis para a chave do usuário
+  let availableModels = [];
+  try {
+    const listRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${key}`);
+    if (listRes.ok) {
+      const listData = await listRes.json();
+      if (listData && Array.isArray(listData.models)) {
+        availableModels = listData.models
+          .filter(m => (m.supportedGenerationMethods || []).includes('generateContent'))
+          .map(m => m.name.replace(/^models\//, ''));
+      }
+    }
+  } catch (e) {
+    console.warn('[Gemini] Não foi possível listar modelos via v1beta:', e);
+  }
+
+  // 2. Se não encontrou, tenta via rota v1
+  if (!availableModels.length) {
+    try {
+      const listResV1 = await fetch(`https://generativelanguage.googleapis.com/v1/models?key=${key}`);
+      if (listResV1.ok) {
+        const listData = await listResV1.json();
+        if (listData && Array.isArray(listData.models)) {
+          availableModels = listData.models
+            .filter(m => (m.supportedGenerationMethods || []).includes('generateContent'))
+            .map(m => m.name.replace(/^models\//, ''));
+        }
+      }
+    } catch (e) {
+      console.warn('[Gemini] Não foi possível listar modelos via v1:', e);
+    }
+  }
+
+  // 3. Ordem de preferência: do mais barato/rápido (flash-8b, flash, flash-lite) para os demais
+  const preferenceOrder = [
+    'gemini-1.5-flash-8b',
     'gemini-1.5-flash',
+    'gemini-2.0-flash-lite',
     'gemini-2.0-flash',
     'gemini-2.5-flash',
+    'gemini-pro',
     'gemini-1.5-pro'
   ];
 
-  let lastError = null;
-  let successData = null;
+  // Ordena os modelos descobertos dando prioridade aos mais baratos
+  const sortedModels = [...availableModels].sort((a, b) => {
+    const idxA = preferenceOrder.findIndex(p => a.toLowerCase().includes(p.toLowerCase()));
+    const idxB = preferenceOrder.findIndex(p => b.toLowerCase().includes(p.toLowerCase()));
+    const scoreA = idxA === -1 ? 999 : idxA;
+    const scoreB = idxB === -1 ? 999 : idxB;
+    return scoreA - scoreB;
+  });
 
-  for (const modelName of candidateModels) {
-    try {
-      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${key}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: {
-            temperature: 0.3,
-            maxOutputTokens: 1000,
-            responseMimeType: 'application/json'
-          }
-        })
-      });
+  // Lista final de candidatos a tentar
+  const finalCandidates = sortedModels.length ? sortedModels : preferenceOrder;
 
-      if (!res.ok) {
-        const e = await res.json();
-        throw new Error(e?.error?.message || `HTTP ${res.status}`);
+  // 4. Executa a chamada no modelo mais barato
+  for (const modelName of finalCandidates) {
+    for (const apiVersion of ['v1beta', 'v1']) {
+      try {
+        const res = await fetch(`https://generativelanguage.googleapis.com/${apiVersion}/models/${modelName}:generateContent?key=${key}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+            generationConfig: {
+              temperature: 0.3,
+              maxOutputTokens: 1000
+            }
+          })
+        });
+
+        if (!res.ok) {
+          const e = await res.json();
+          throw new Error(e?.error?.message || `HTTP ${res.status}`);
+        }
+
+        successData = await res.json();
+        if (successData) break;
+      } catch (err) {
+        lastError = err;
+        console.warn(`[Gemini] Tentativa com ${apiVersion}/${modelName} falhou:`, err.message);
       }
-
-      successData = await res.json();
-      break;
-    } catch(err) {
-      lastError = err;
-      console.warn(`[Gemini] Falha ao tentar ${modelName}:`, err.message);
     }
+    if (successData) break;
   }
 
   try {

@@ -1,4 +1,4 @@
-# 🎮 MEU BACKLOG — Gerenciador de Jogos (MediaVault)
+# 🎮 MEDIAVAULT — Gerenciador de Jogos
 
 Uma aplicação web moderna com estética **Neo-Brutalista** para organizar e gerenciar seu backlog pessoal de jogos. Sincronização 100% em tempo real com o **Supabase**, reorganização inteligente por temática com o **Google Gemini AI** e um seletor dinâmico para jogar **2 jogos contrastantes por vez** (1 pesado e 1 leve).
 

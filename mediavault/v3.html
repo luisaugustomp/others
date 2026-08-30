@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="light">
+<html lang="pt-BR" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MEDIAVAULT — Gerenciador de Jogos</title>
-  <meta name="description" content="Gerencie seu backlog pessoal de videogames integrado com Supabase e IA." />
+  <title>MEDIAVAULT — PlayStation Edition</title>
+  <meta name="description" content="Gerenciador de backlog de jogos no estilo PlayStation Store & PS5 UI." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style-v3.css" />
 </head>
 <body>
 
@@ -32,28 +31,35 @@
 <!-- HEADER -->
 <header id="site-header">
   <div class="header-inner">
-    <a href="#" class="site-logo" id="logo-home-btn">MEDIAVAULT</a>
-    <span class="header-tagline">Gerenciador<br>de Jogos</span>
+    <a href="#" class="site-logo" id="logo-home-btn">
+      <i class="fa-brands fa-playstation"></i>
+      MEDIAVAULT
+    </a>
+    <span class="header-tagline">PS5 Store Edition</span>
+
     <div class="search-wrap">
       <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="text" id="search-input" placeholder="Buscar jogo..." aria-label="Buscar jogo" />
+      <input type="text" id="search-input" placeholder="Pesquisar jogos..." aria-label="Buscar jogo" />
     </div>
+
     <nav class="nav-pills" aria-label="Navegação principal">
       <button class="nav-pill active" id="nav-backlog" data-view="backlog">
         <i class="fa-solid fa-gamepad"></i> Backlog
       </button>
       <button class="nav-pill" id="nav-library" data-view="library">
-        <i class="fa-solid fa-book"></i> Biblioteca
+        <i class="fa-solid fa-layer-group"></i> Biblioteca
       </button>
     </nav>
-    <div class="nav-pills" style="margin-left:auto;">
-      <a href="v2.html" class="nav-pill" style="background:#1b2838; color:#66c0f4; text-decoration:none;" title="Ver estilo Steam Client">
-        <i class="fa-brands fa-steam"></i> Steam (V2)
+
+    <div class="theme-selector-group">
+      <a href="index.html" class="style-switch-btn" title="Estilo Neo-Brutal">
+        <i class="fa-solid fa-cube"></i> V1
       </a>
-      <a href="v3.html" class="nav-pill" style="background:#00439c; color:#fff; text-decoration:none;" title="Ver estilo PlayStation UI">
-        <i class="fa-brands fa-playstation"></i> PS5 (V3)
+      <a href="v2.html" class="style-switch-btn" title="Estilo Steam Client">
+        <i class="fa-brands fa-steam"></i> Steam
       </a>
     </div>
+
     <button class="header-btn" id="config-btn" title="Configurações e Chaves" aria-label="Configurações">
       <i class="fa-solid fa-gear"></i>
     </button>
@@ -81,8 +87,6 @@
       </div>
     </section>
 
-    <hr style="border:none;border-top:var(--border-w) solid var(--border);margin:0 0 40px;" />
-
     <div id="genre-sections"></div>
     <div id="no-results"><i class="fa-solid fa-circle-xmark"></i><p>Nenhum jogo encontrado para "<span id="no-results-query"></span>"</p></div>
     <div id="empty-state" class="empty-state" style="display:none;">
@@ -97,13 +101,13 @@
   <div id="library-section">
     <div class="section-label"><i class="fa-solid fa-book"></i> Biblioteca Completa</div>
     <h2 class="section-heading">TODOS OS JOGOS</h2>
-    <div id="library-filters" class="nav-pills" style="margin-bottom:24px;flex-wrap:wrap;">
+    <div id="library-filters" class="nav-pills" style="margin-bottom:28px;flex-wrap:wrap;">
       <button class="nav-pill active" data-filter="all">Todos</button>
-      <button class="nav-pill" data-filter="backlog"><i class="fa-solid fa-circle" style="color:var(--s-backlog)"></i> Backlog</button>
-      <button class="nav-pill" data-filter="playing"><i class="fa-solid fa-circle" style="color:var(--s-playing)"></i> Jogando</button>
-      <button class="nav-pill" data-filter="completed"><i class="fa-solid fa-circle" style="color:var(--s-completed)"></i> Completado</button>
-      <button class="nav-pill" data-filter="platinum"><i class="fa-solid fa-circle" style="color:var(--s-platinum)"></i> Platinado</button>
-      <button class="nav-pill" data-filter="dropped"><i class="fa-solid fa-circle" style="color:var(--s-dropped)"></i> Abandonado</button>
+      <button class="nav-pill" data-filter="backlog"><i class="fa-solid fa-circle" style="color:var(--s-backlog); font-size: 0.65rem;"></i> Backlog</button>
+      <button class="nav-pill" data-filter="playing"><i class="fa-solid fa-circle" style="color:var(--s-playing); font-size: 0.65rem;"></i> Jogando</button>
+      <button class="nav-pill" data-filter="completed"><i class="fa-solid fa-circle" style="color:var(--s-completed); font-size: 0.65rem;"></i> Completado</button>
+      <button class="nav-pill" data-filter="platinum"><i class="fa-solid fa-circle" style="color:var(--s-platinum); font-size: 0.65rem;"></i> Platinado</button>
+      <button class="nav-pill" data-filter="dropped"><i class="fa-solid fa-circle" style="color:var(--s-dropped); font-size: 0.65rem;"></i> Abandonado</button>
     </div>
     <div id="library-grid" class="games-grid"></div>
   </div>
@@ -126,19 +130,19 @@
 <div class="modal-overlay" id="add-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="add-modal-title">
   <div class="modal">
     <div class="modal-header">
-      <h2 class="modal-title" id="add-modal-title">NOVO JOGO</h2>
+      <h2 class="modal-title" id="add-modal-title">Novo Jogo</h2>
       <button class="modal-close" id="add-modal-close" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="modal-body">
       <form id="add-game-form" novalidate>
         <div class="form-group">
           <label class="form-label" for="form-title">Título do Jogo *</label>
-          <input type="text" class="form-input" id="form-title" placeholder="Ex: Resident Evil 4 Remake" required />
+          <input type="text" class="form-input" id="form-title" placeholder="Ex: God of War Ragnarök" required />
         </div>
         <div class="form-row">
           <div class="form-group">
             <label class="form-label" for="form-genre">Gênero *</label>
-            <input type="text" class="form-input" id="form-genre" placeholder="Ex: Survival Horror" list="genre-suggestions" required />
+            <input type="text" class="form-input" id="form-genre" placeholder="Ex: Action-Adventure" list="genre-suggestions" required />
             <datalist id="genre-suggestions">
               <option value="Action"><option value="Action-Adventure"><option value="Fighting">
               <option value="FPS"><option value="Horror"><option value="JRPG">
@@ -161,7 +165,7 @@
         <div class="form-group">
           <label class="form-label">Tags de Similaridade</label>
           <div class="tags-wrap" id="tags-wrap">
-            <input type="text" class="tag-input" id="tag-input" placeholder="Ex: horror, survival (Enter para adicionar)" />
+            <input type="text" class="tag-input" id="tag-input" placeholder="Ex: action, mythology (Enter para adicionar)" />
           </div>
         </div>
         <div class="form-group">
@@ -206,7 +210,7 @@
 <div class="modal-overlay" id="detail-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="detail-modal-title">
   <div class="modal modal-lg">
     <div class="modal-header">
-      <h2 class="modal-title" id="detail-modal-title">DETALHES</h2>
+      <h2 class="modal-title" id="detail-modal-title">Detalhes</h2>
       <button class="modal-close" id="detail-modal-close" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="modal-body">
@@ -243,46 +247,26 @@
   </div>
 </div>
 
-<!-- MODAL: PICK TWO -->
-<div class="modal-overlay" id="pick-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="pick-modal-title">
-  <div class="modal modal-lg">
-    <div class="modal-header">
-      <h2 class="modal-title" id="pick-modal-title">ESCOLHER DUPLA</h2>
-      <button class="modal-close" id="pick-modal-close" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    <div class="modal-body">
-      <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:16px;">
-        <i class="fa-solid fa-circle-info"></i>
-        &nbsp;Um jogo <strong>pesado</strong> e um <strong>leve</strong> — estilos contrastantes atualizados no Supabase.
-      </p>
-      <div class="pick-two-grid" id="pick-two-grid"></div>
-      <div class="form-footer">
-        <button class="btn" id="pick-modal-shuffle"><i class="fa-solid fa-shuffle"></i> Outra Dupla</button>
-        <button class="btn btn-accent btn-lg" id="pick-modal-confirm"><i class="fa-solid fa-check"></i> Confirmar Dupla</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- MODAL: AI -->
 <div class="modal-overlay" id="ai-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="ai-modal-title">
   <div class="modal">
     <div class="modal-header">
-      <h2 class="modal-title" id="ai-modal-title">REORGANIZAR POR IA</h2>
+      <h2 class="modal-title" id="ai-modal-title">Reorganizar por IA</h2>
       <button class="modal-close" id="ai-modal-close" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="modal-body">
-      <div id="ai-thinking-state" class="ai-thinking" style="display:none;">
-        <div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div>
+      <div id="ai-thinking-state" class="ai-thinking" style="display:none; text-align:center; padding: 24px; color: var(--ps-blue);">
+        <i class="fa-solid fa-spinner fa-spin fa-2x" style="margin-bottom: 12px; display:block;"></i>
+        Reorganizando jogos por similaridade com Gemini AI...
       </div>
       <div id="ai-idle-state">
-        <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:16px;">
-          O Gemini vai analisar os jogos do seu Supabase e reorganizá-los por semelhança temática. A nova ordem e sua chave são salvas diretamente no Supabase.
+        <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:18px; line-height: 1.5;">
+          O Gemini vai analisar os jogos do seu Supabase e reorganizá-los por afinidade temática. A nova ordem e sua chave são salvas diretamente no Supabase.
         </p>
         <div class="form-group">
           <label class="form-label" for="ai-key-input">Gemini API Key (Salva no Supabase)</label>
           <input type="password" class="form-input" id="ai-key-input" placeholder="AIzaSy..." />
-          <small style="font-size:0.72rem;color:var(--text-muted);margin-top:6px;display:block;">
+          <small style="font-size:0.75rem; color:var(--text-subtle); margin-top:6px; display:block;">
             <i class="fa-solid fa-cloud"></i> Sincronizada na tabela <code>settings</code> do seu Supabase.
           </small>
         </div>
@@ -294,11 +278,11 @@
         </div>
       </div>
       <div id="ai-result-state" style="display:none;">
-        <p style="font-size:0.85rem;font-weight:700;color:var(--text-muted);margin-bottom:4px;">Nova ordem sugerida pela IA:</p>
-        <ul class="ai-result-list" id="ai-result-list"></ul>
+        <p style="font-size:0.88rem; font-weight:700; color:var(--text-main); margin-bottom:8px;">Nova ordem sugerida pela IA:</p>
+        <ul class="ai-result-list" id="ai-result-list" style="list-style:none; display:flex; flex-direction:column; gap:8px;"></ul>
         <div class="form-footer">
           <button class="btn" id="ai-result-cancel">Cancelar</button>
-          <button class="btn btn-success btn-lg" id="ai-apply-btn"><i class="fa-solid fa-check"></i> Salvar Ordem no Supabase</button>
+          <button class="btn btn-accent btn-lg" id="ai-apply-btn"><i class="fa-solid fa-check"></i> Salvar Ordem no Supabase</button>
         </div>
       </div>
     </div>
@@ -309,7 +293,7 @@
 <div class="modal-overlay" id="config-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="config-modal-title">
   <div class="modal">
     <div class="modal-header">
-      <h2 class="modal-title" id="config-modal-title">CONFIGURAÇÕES</h2>
+      <h2 class="modal-title" id="config-modal-title">Configurações</h2>
       <button class="modal-close" id="config-modal-close" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="modal-body">
@@ -325,7 +309,7 @@
         <div class="form-group">
           <label class="form-label" for="cfg-gemini-key">Gemini AI API Key (Opcional)</label>
           <input type="password" class="form-input" id="cfg-gemini-key" placeholder="AIzaSy..." />
-          <small style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;display:block;">
+          <small style="font-size:0.75rem; color:var(--text-subtle); margin-top:4px; display:block;">
             <i class="fa-solid fa-database"></i> A chave da IA é sincronizada na tabela <code>settings</code> do Supabase.
           </small>
         </div>

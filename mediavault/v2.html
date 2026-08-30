@@ -32,28 +32,33 @@
 <header id="site-header">
   <div class="header-inner">
     <a href="#" class="site-logo" id="logo-home-btn">
-      <i class="fa-solid fa-gamepad" style="font-size: 1.4rem; color: var(--cp-yellow);"></i>
+      <i class="fa-brands fa-steam" style="color:var(--steam-blue);"></i>
       MEDIAVAULT
     </a>
-    <span class="header-tagline">NIGHT CITY<br>// NETRUNNER SHARDS</span>
+    <span class="header-tagline">Steam Client<br>Edition</span>
 
     <div class="search-wrap">
       <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="text" id="search-input" placeholder="SCANNING SHARDS..." aria-label="Buscar jogo" />
+      <input type="text" id="search-input" placeholder="Buscar na biblioteca..." aria-label="Buscar jogo" />
     </div>
 
     <nav class="nav-pills" aria-label="Navegação principal">
       <button class="nav-pill active" id="nav-backlog" data-view="backlog">
-        <i class="fa-solid fa-microchip"></i> Backlog
+        <i class="fa-solid fa-gamepad"></i> Backlog
       </button>
       <button class="nav-pill" id="nav-library" data-view="library">
-        <i class="fa-solid fa-database"></i> Biblioteca
+        <i class="fa-solid fa-layer-group"></i> Biblioteca
       </button>
     </nav>
 
-    <a href="index.html" class="style-switch-btn" title="Alternar para Estilo Neo-Brutal">
-      <i class="fa-solid fa-cube"></i> Estilo Neo-Brutal
-    </a>
+    <div class="theme-selector-group">
+      <a href="index.html" class="style-switch-btn" title="Estilo Neo-Brutal">
+        <i class="fa-solid fa-cube"></i> V1
+      </a>
+      <a href="v3.html" class="style-switch-btn" title="Estilo PlayStation UI">
+        <i class="fa-brands fa-playstation"></i> PS5 (V3)
+      </a>
+    </div>
 
     <button class="header-btn" id="config-btn" title="Configurações e Chaves" aria-label="Configurações">
       <i class="fa-solid fa-sliders"></i>

@@ -274,14 +274,32 @@ function renderGenres() {
   attachCards(genreSects);
 }
 
-// ── RENDER: LIBRARY ───────────────────────────
+// ── RENDER: LIBRARY (GRID ÚNICO SEM SEPARAÇÃO DE GÊNEROS) ─────────────
 function renderLibrary() {
   const f = S.libFilter;
-  const list = f==='all' ? S.games : S.games.filter(g=>g.status===f);
+  const q = S.query.toLowerCase().trim();
+  
+  let list = f === 'all' ? S.games : S.games.filter(g => g.status === f);
+  
+  if (q) {
+    list = list.filter(g =>
+      g.title.toLowerCase().includes(q) ||
+      g.genre.toLowerCase().includes(q) ||
+      (g.tags || []).some(t => t.toLowerCase().includes(q))
+    );
+  }
+
   if (!list.length) {
-    libraryGrid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;"><i class="fa-solid fa-box-open"></i><h3>Nenhum Jogo</h3><p>Sem jogos cadastrados com esse filtro.</p></div>`;
+    libraryGrid.innerHTML = `
+      <div class="empty-state" style="grid-column:1/-1;">
+        <i class="fa-solid fa-box-open"></i>
+        <h3>Nenhum Jogo Encontrado</h3>
+        <p>${q ? `Sem jogos correspondentes para "${esc(q)}".` : 'Sem jogos cadastrados com esse filtro.'}</p>
+      </div>`;
     return;
   }
+
+  // Renderiza todos em um único grid contínuo sem separação por gênero
   libraryGrid.innerHTML = list.map(gameCardHTML).join('');
   attachCards(libraryGrid);
 }
@@ -836,7 +854,11 @@ document.querySelectorAll('#library-filters .nav-pill').forEach(p => {
   });
 });
 
-$('search-input').addEventListener('input', () => { S.query=$('search-input').value; renderGenres(); });
+$('search-input').addEventListener('input', () => { 
+  S.query = $('search-input').value; 
+  renderGenres(); 
+  renderLibrary(); 
+});
 
 const themeToggleBtn = $('theme-toggle');
 if (themeToggleBtn) {

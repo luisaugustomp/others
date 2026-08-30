@@ -331,8 +331,8 @@
     .dot-dropped   { background: var(--s-dropped); }
 
     /* VIEWS */
-    #library-section { display: none; }
-    #library-section.active, #backlog-section.active { display: block; }
+    #backlog-section, #library-section { display: none; }
+    #backlog-section.active, #library-section.active { display: block; }
 
     /* TOAST */
     #toast-container { position:fixed;bottom:100px;right:24px;display:flex;flex-direction:column;gap:10px;z-index:9999; }

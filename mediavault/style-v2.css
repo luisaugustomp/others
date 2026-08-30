@@ -832,6 +832,6 @@ input, textarea, select { font-family: inherit; }
 .loader-sub { font-size: 0.8rem; color: var(--steam-blue); }
 
 /* Views */
-#library-section { display: none; }
-#library-section.active, #backlog-section.active { display: block; }
+#backlog-section, #library-section { display: none; }
+#backlog-section.active, #library-section.active { display: block; }
 #cover-preview-img { margin-top: 10px; max-height: 120px; border-radius: 2px; display: none; }

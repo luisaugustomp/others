@@ -516,71 +516,69 @@ function pickPair(exclude=[]) {
 
 let pickExclude = [];
 
-function openPickTwo(reset=true) {
-  if (reset) pickExclude=[];
-  const pair = pickPair(pickExclude);
-  if (!pair) { toast('Cadastre ao menos 2 jogos no Supabase.','info'); return; }
-  S.pendingPair = pair;
-  renderPickGrid(pair);
-  openModal('pick-modal-overlay');
-}
+async function quickShuffleFocus() {
+  const currentFocused = S.games.filter(g => g.is_focus);
+  pickExclude = currentFocused.map(g => g.id);
 
-function renderPickGrid({heavy, light}) {
-  function card(g, type) {
-    const badge = type==='heavy'
-      ? `<span style="background:var(--accent-2);color:#fff;padding:2px 8px;font-size:0.65rem;font-weight:700;border:2px solid var(--border);border-radius:2px;display:inline-flex;gap:4px;align-items:center;"><i class="fa-solid fa-skull"></i> PESADO</span>`
-      : `<span style="background:var(--accent-3);padding:2px 8px;font-size:0.65rem;font-weight:700;border:2px solid var(--border);border-radius:2px;display:inline-flex;gap:4px;align-items:center;"><i class="fa-solid fa-sun"></i> LEVE</span>`;
-    const cover = g.cover_url
-      ? `<img class="pick-card-cover" src="${esc(g.cover_url)}" alt="" onerror="this.style.display='none'"/>`
-      : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--text-muted)"><i class="fa-solid fa-gamepad"></i></div>`;
-    return `
-      <div>
-        <div style="margin-bottom:8px">${badge}</div>
-        <div class="pick-card" data-id="${g.id}">
-          <div class="pick-card-cover-wrap">${cover}</div>
-          <div class="pick-card-label">${esc(g.title)}</div>
-        </div>
-        <div style="font-size:0.72rem;color:var(--text-muted);margin-top:6px;text-align:center">${esc(g.genre)}</div>
-      </div>`;
-  }
-  $('pick-two-grid').innerHTML = `${card(heavy,'heavy')}<div class="vs-divider">VS</div>${card(light,'light')}`;
-}
-
-$('pick-modal-shuffle').addEventListener('click', () => {
-  if (S.pendingPair) pickExclude=[S.pendingPair.heavy.id, S.pendingPair.light.id];
-  const pair = pickPair(pickExclude);
+  let pair = pickPair(pickExclude);
   if (!pair) {
-    pickExclude=[];
-    const p2=pickPair([]);
-    if(!p2){toast('Sem mais combinações.','info');return;}
-    S.pendingPair=p2;
-    renderPickGrid(p2);
+    pickExclude = [];
+    pair = pickPair([]);
+  }
+
+  if (!pair) {
+    toast('Cadastre ao menos 2 jogos para sortear duplas.', 'info');
     return;
   }
-  S.pendingPair=pair;
-  renderPickGrid(pair);
-});
 
-$('pick-modal-confirm').addEventListener('click', async () => {
-  if (!S.pendingPair) return;
-  const {heavy,light} = S.pendingPair;
-  try {
-    for (const g of S.games.filter(x=>x.is_focus)) {
-      await dbUpdate(g.id,{is_focus:false});
-      g.is_focus=false;
-    }
-    for (const [g, w] of [[heavy,'heavy'],[light,'light']]) {
-      await dbUpdate(g.id,{is_focus:true,weight:w,status:'playing'});
-      const idx=S.games.findIndex(x=>x.id===g.id);
-      if(idx>=0){S.games[idx].is_focus=true;S.games[idx].weight=w;S.games[idx].status='playing';}
-    }
-    closeModal('pick-modal-overlay');
-    renderAll();
-    toast('Dupla salva no Supabase! Bora jogar!','success');
-  } catch(err) {
-    toast(`Erro ao sincronizar foco: ${err.message}`,'error');
+  const { heavy, light } = pair;
+  const btn = $('pick-two-btn');
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sorteando...';
   }
-});
+
+  try {
+    // 1. Remove foco antigo no Supabase
+    for (const g of S.games.filter(x => x.is_focus)) {
+      await dbUpdate(g.id, { is_focus: false });
+      g.is_focus = false;
+    }
+
+    // 2. Aplica novo foco no Supabase
+    for (const [g, w] of [[heavy, 'heavy'], [light, 'light']]) {
+      await dbUpdate(g.id, { is_focus: true, weight: w, status: 'playing' });
+      const idx = S.games.findIndex(x => x.id === g.id);
+      if (idx >= 0) {
+        S.games[idx].is_focus = true;
+        S.games[idx].weight = w;
+        S.games[idx].status = 'playing';
+      }
+    }
+
+    renderAll();
+    toast(`Nova dupla: ${heavy.title} & ${light.title}`, 'success');
+
+    // Animação suave de entrada dos novos cards de foco
+    setTimeout(() => {
+      document.querySelectorAll('.focus-card').forEach(card => {
+        card.classList.add('reorder-anim');
+        setTimeout(() => card.classList.remove('reorder-anim'), 500);
+      });
+    }, 50);
+
+  } catch(err) {
+    toast(`Erro ao trocar sugestões no Supabase: ${err.message}`, 'error');
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fa-solid fa-shuffle"></i> Trocar Sugestões';
+    }
+  }
+}
+
+// Mantido como alias caso chamado
+const openPickTwo = quickShuffleFocus;
 
 // ── AI SORT MODAL (GEMINI INTEGRADO COM SUPABASE) ──
 async function openAi() {

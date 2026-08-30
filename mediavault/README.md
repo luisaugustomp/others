@@ -27,10 +27,10 @@ Uma aplicação web moderna com estética **Neo-Brutalista** para organizar e ge
 
 ```
 mediavault/
-├── index.html           # Estilo V1: Neo-Brutalismo Web
-├── style.css            # CSS Neo-Brutalista (bordas grossas e sombras sólidas)
-├── v2.html              # Estilo V2: Tactical Retro-Tech Terminal & Gaming Archive
-├── style-v2.css         # CSS Tactical HUD (cantos chanfrados, Amber CRT, estética de cartucho)
+├── index.html           # Estilo V1: Neo-Brutalismo Web (alto contraste e bordas duras)
+├── style.css            # CSS Neo-Brutalista
+├── v2.html              # Estilo V2: Modern Bento Grid (Apple / Linear minimalista)
+├── style-v2.css         # CSS Bento Grid (bordas arredondadas, sombras suaves, cards modulares)
 ├── app.js               # Lógica da aplicação, Supabase SDK e Gemini AI (compartilhada)
 ├── supabase_schema.sql  # Script de criação do banco de dados (tabelas e RLS)
 └── README.md            # Documentação do projeto

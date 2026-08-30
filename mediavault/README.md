@@ -29,8 +29,8 @@ Uma aplicação web moderna com estética **Neo-Brutalista** para organizar e ge
 mediavault/
 ├── index.html           # Modo Claro (estética Neo-Brutalista)
 ├── style.css            # CSS Neo-Brutalista Light Mode
-├── v2.html              # Modo Noturno (estética oficial Steam Client)
-├── style-v2.css         # CSS Steam Dark Mode (`#171a21` / `#1b2838` / `#66c0f4`)
+├── v2.html              # Modo Noturno (estética Dark Slate & Cyan)
+├── style-v2.css         # CSS Dark Mode (`#171a21` / `#1b2838` / `#66c0f4`)
 ├── app.js               # Lógica da aplicação, Supabase SDK e Gemini AI (compartilhada)
 ├── supabase_schema.sql  # Script de criação do banco de dados (tabelas e RLS)
 └── README.md            # Documentação do projeto

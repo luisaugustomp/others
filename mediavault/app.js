@@ -620,22 +620,54 @@ $('ai-run-btn').addEventListener('click', async () => {
   const list = pool.map((g,i)=>`${i+1}. "${g.title}" — Gênero: ${g.genre}, Tags: ${(g.tags||[]).join(', ')||'nenhuma'}`).join('\n');
   const prompt = `Você é um especialista em videogames. Aqui está minha lista de backlog:\n\n${list}\n\nReorganize agrupando jogos com temas e estilos similares próximos uns dos outros (survival horror juntos, RPGs juntos, jogos casuais juntos, etc.).\nResponda SOMENTE com JSON válido: {"order": [lista de números na nova ordem]}\nExemplo: {"order": [3, 1, 5, 2, 4]}`;
   
-  try {
-    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${key}`, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ contents:[{parts:[{text:prompt}]}], generationConfig:{temperature:0.3,maxOutputTokens:512} })
-    });
-    if (!res.ok) {
-      const e=await res.json();
-      throw new Error(e?.error?.message||`HTTP ${res.status}`);
+  const candidateModels = [
+    'gemini-1.5-flash',
+    'gemini-2.0-flash',
+    'gemini-2.5-flash',
+    'gemini-1.5-pro'
+  ];
+
+  let lastError = null;
+  let successData = null;
+
+  for (const modelName of candidateModels) {
+    try {
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${key}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: {
+            temperature: 0.3,
+            maxOutputTokens: 1000,
+            responseMimeType: 'application/json'
+          }
+        })
+      });
+
+      if (!res.ok) {
+        const e = await res.json();
+        throw new Error(e?.error?.message || `HTTP ${res.status}`);
+      }
+
+      successData = await res.json();
+      break;
+    } catch(err) {
+      lastError = err;
+      console.warn(`[Gemini] Falha ao tentar ${modelName}:`, err.message);
     }
-    const data = await res.json();
-    const text = data.candidates?.[0]?.content?.parts?.[0]?.text||'';
+  }
+
+  try {
+    if (!successData) {
+      throw lastError || new Error('Não foi possível obter resposta da IA.');
+    }
+
+    const text = successData.candidates?.[0]?.content?.parts?.[0]?.text || '';
     const m = text.match(/\{[\s\S]*\}/);
-    if (!m) throw new Error('Resposta de IA inválida.');
-    const {order} = JSON.parse(m[0]);
-    if (!Array.isArray(order)) throw new Error('Formato de resposta inválido.');
+    if (!m) throw new Error('Resposta de IA em formato inválido.');
+    const { order } = JSON.parse(m[0]);
+    if (!Array.isArray(order)) throw new Error('Formato de lista de resposta inválido.');
 
     S.aiOrder = order.map(n=>pool[n-1]).filter(Boolean);
     $('ai-thinking-state').style.display='none';

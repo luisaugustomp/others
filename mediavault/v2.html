@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="light">
+<html lang="pt-BR" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MEDIAVAULT — Gerenciador de Jogos</title>
+  <title>MEDIAVAULT — V2 Cyber Glassmorphism</title>
   <meta name="description" content="Gerencie seu backlog pessoal de videogames integrado com Supabase e IA." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style-v2.css" />
 </head>
 <body>
 
@@ -32,28 +32,35 @@
 <!-- HEADER -->
 <header id="site-header">
   <div class="header-inner">
-    <a href="#" class="site-logo" id="logo-home-btn">MEDIAVAULT</a>
-    <span class="header-tagline">Gerenciador<br>de Jogos</span>
+    <a href="#" class="site-logo" id="logo-home-btn">
+      <i class="fa-solid fa-layer-group" style="font-size: 1.5rem; color: var(--accent-cyan);"></i>
+      MEDIAVAULT
+    </a>
+    <span class="header-tagline">Cyber Glass<br>Edition</span>
+
     <div class="search-wrap">
       <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="text" id="search-input" placeholder="Buscar jogo..." aria-label="Buscar jogo" />
+      <input type="text" id="search-input" placeholder="Buscar jogo no backlog..." aria-label="Buscar jogo" />
     </div>
+
     <nav class="nav-pills" aria-label="Navegação principal">
       <button class="nav-pill active" id="nav-backlog" data-view="backlog">
         <i class="fa-solid fa-gamepad"></i> Backlog
       </button>
       <button class="nav-pill" id="nav-library" data-view="library">
-        <i class="fa-solid fa-book"></i> Biblioteca
+        <i class="fa-solid fa-book-bookmark"></i> Biblioteca
       </button>
     </nav>
-    <a href="v2.html" class="nav-pill" style="background:var(--accent-4); color:#fff; text-decoration:none;" title="Testar Estilo Cyber Glassmorphism">
-      <i class="fa-solid fa-wand-magic-sparkles"></i> Testar Estilo V2
+
+    <a href="index.html" class="style-switch-btn" title="Alternar para Estilo Neo-Brutalista">
+      <i class="fa-solid fa-palette"></i> Ver Neo-Brutal
     </a>
+
     <button class="header-btn" id="config-btn" title="Configurações e Chaves" aria-label="Configurações">
       <i class="fa-solid fa-gear"></i>
     </button>
-    <button class="header-btn" id="theme-toggle" title="Alternar tema" aria-label="Alternar tema">
-      <i class="fa-solid fa-moon"></i>
+    <button class="header-btn" id="theme-toggle" title="Alternar tema claro/escuro" aria-label="Alternar tema">
+      <i class="fa-solid fa-sun"></i>
     </button>
   </div>
 </header>
@@ -76,8 +83,6 @@
       </div>
     </section>
 
-    <hr style="border:none;border-top:var(--border-w) solid var(--border);margin:0 0 40px;" />
-
     <div id="genre-sections"></div>
     <div id="no-results"><i class="fa-solid fa-circle-xmark"></i><p>Nenhum jogo encontrado para "<span id="no-results-query"></span>"</p></div>
     <div id="empty-state" class="empty-state" style="display:none;">
@@ -92,7 +97,7 @@
   <div id="library-section">
     <div class="section-label"><i class="fa-solid fa-book"></i> Biblioteca Completa</div>
     <h2 class="section-heading">TODOS OS JOGOS</h2>
-    <div id="library-filters" class="nav-pills" style="margin-bottom:24px;flex-wrap:wrap;">
+    <div id="library-filters" class="nav-pills" style="margin-bottom:28px;flex-wrap:wrap;">
       <button class="nav-pill active" data-filter="all">Todos</button>
       <button class="nav-pill" data-filter="backlog"><i class="fa-solid fa-circle" style="color:var(--s-backlog)"></i> Backlog</button>
       <button class="nav-pill" data-filter="playing"><i class="fa-solid fa-circle" style="color:var(--s-playing)"></i> Jogando</button>
@@ -121,7 +126,7 @@
 <div class="modal-overlay" id="add-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="add-modal-title">
   <div class="modal">
     <div class="modal-header">
-      <h2 class="modal-title" id="add-modal-title">NOVO JOGO</h2>
+      <h2 class="modal-title" id="add-modal-title">Novo Jogo</h2>
       <button class="modal-close" id="add-modal-close" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="modal-body">
@@ -201,7 +206,7 @@
 <div class="modal-overlay" id="detail-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="detail-modal-title">
   <div class="modal modal-lg">
     <div class="modal-header">
-      <h2 class="modal-title" id="detail-modal-title">DETALHES</h2>
+      <h2 class="modal-title" id="detail-modal-title">Detalhes</h2>
       <button class="modal-close" id="detail-modal-close" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="modal-body">
@@ -242,12 +247,12 @@
 <div class="modal-overlay" id="pick-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="pick-modal-title">
   <div class="modal modal-lg">
     <div class="modal-header">
-      <h2 class="modal-title" id="pick-modal-title">ESCOLHER DUPLA</h2>
+      <h2 class="modal-title" id="pick-modal-title">Escolher Dupla</h2>
       <button class="modal-close" id="pick-modal-close" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="modal-body">
-      <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:16px;">
-        <i class="fa-solid fa-circle-info"></i>
+      <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:16px;">
+        <i class="fa-solid fa-circle-info" style="color:var(--accent-cyan);"></i>
         &nbsp;Um jogo <strong>pesado</strong> e um <strong>leve</strong> — estilos contrastantes atualizados no Supabase.
       </p>
       <div class="pick-two-grid" id="pick-two-grid"></div>
@@ -263,7 +268,7 @@
 <div class="modal-overlay" id="ai-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="ai-modal-title">
   <div class="modal">
     <div class="modal-header">
-      <h2 class="modal-title" id="ai-modal-title">REORGANIZAR POR IA</h2>
+      <h2 class="modal-title" id="ai-modal-title">Reorganizar por IA</h2>
       <button class="modal-close" id="ai-modal-close" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="modal-body">
@@ -271,13 +276,13 @@
         <div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div>
       </div>
       <div id="ai-idle-state">
-        <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:16px;">
+        <p style="font-size:0.92rem;color:var(--text-muted);margin-bottom:16px;">
           O Gemini vai analisar os jogos do seu Supabase e reorganizá-los por semelhança temática. A nova ordem e sua chave são salvas diretamente no Supabase.
         </p>
         <div class="form-group">
           <label class="form-label" for="ai-key-input">Gemini API Key (Salva no Supabase)</label>
           <input type="password" class="form-input" id="ai-key-input" placeholder="AIzaSy..." />
-          <small style="font-size:0.72rem;color:var(--text-muted);margin-top:6px;display:block;">
+          <small style="font-size:0.75rem;color:var(--text-subtle);margin-top:6px;display:block;">
             <i class="fa-solid fa-cloud"></i> Sincronizada na tabela <code>settings</code> do seu Supabase.
           </small>
         </div>
@@ -289,7 +294,7 @@
         </div>
       </div>
       <div id="ai-result-state" style="display:none;">
-        <p style="font-size:0.85rem;font-weight:700;color:var(--text-muted);margin-bottom:4px;">Nova ordem sugerida pela IA:</p>
+        <p style="font-size:0.88rem;font-weight:700;color:var(--text-muted);margin-bottom:6px;">Nova ordem sugerida pela IA:</p>
         <ul class="ai-result-list" id="ai-result-list"></ul>
         <div class="form-footer">
           <button class="btn" id="ai-result-cancel">Cancelar</button>
@@ -304,7 +309,7 @@
 <div class="modal-overlay" id="config-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="config-modal-title">
   <div class="modal">
     <div class="modal-header">
-      <h2 class="modal-title" id="config-modal-title">CONFIGURAÇÕES</h2>
+      <h2 class="modal-title" id="config-modal-title">Configurações</h2>
       <button class="modal-close" id="config-modal-close" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="modal-body">
@@ -320,7 +325,7 @@
         <div class="form-group">
           <label class="form-label" for="cfg-gemini-key">Gemini AI API Key (Opcional)</label>
           <input type="password" class="form-input" id="cfg-gemini-key" placeholder="AIzaSy..." />
-          <small style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;display:block;">
+          <small style="font-size:0.75rem;color:var(--text-subtle);margin-top:4px;display:block;">
             <i class="fa-solid fa-database"></i> A chave da IA é sincronizada na tabela <code>settings</code> do Supabase.
           </small>
         </div>

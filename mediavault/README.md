@@ -27,9 +27,11 @@ Uma aplicação web moderna com estética **Neo-Brutalista** para organizar e ge
 
 ```
 mediavault/
-├── index.html           # Estrutura semântica da aplicação
-├── style.css            # Estilização completa e variáveis Neo-Brutalistas
-├── app.js               # Lógica da aplicação, Supabase SDK e Gemini AI
+├── index.html           # Estilo V1: Neo-Brutalismo
+├── style.css            # CSS Neo-Brutalista (bordas grossas e sombras duras)
+├── v2.html              # Estilo V2: Cyber Glassmorphism & Modern Gaming UI
+├── style-v2.css         # CSS Cyber Glassmorphism (blur, neon glow e curvas modernas)
+├── app.js               # Lógica da aplicação, Supabase SDK e Gemini AI (compartilhada)
 ├── supabase_schema.sql  # Script de criação do banco de dados (tabelas e RLS)
 └── README.md            # Documentação do projeto
 ```

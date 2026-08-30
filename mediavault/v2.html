@@ -3,11 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MEDIAVAULT — V2 Cyber Glassmorphism</title>
-  <meta name="description" content="Gerencie seu backlog pessoal de videogames integrado com Supabase e IA." />
+  <title>MEDIAVAULT // Tactical Archive Terminal</title>
+  <meta name="description" content="Terminal tático de gerenciamento de backlog de jogos e cartuchos." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link rel="stylesheet" href="style-v2.css" />
@@ -18,49 +17,48 @@
 <div id="supabase-banner">
   <div>
     <i class="fa-solid fa-triangle-exclamation"></i>
-    <span>&nbsp;<strong>Supabase não conectado:</strong> Configure suas credenciais para sincronizar seus jogos e chaves no banco de dados.</span>
+    <span>&nbsp;<strong>[ALERTA DE CONEXÃO]:</strong> Banco Supabase não sincronizado. Configure as chaves de acesso.</span>
   </div>
-  <button id="banner-config-btn"><i class="fa-solid fa-gear"></i> Configurar</button>
+  <button id="banner-config-btn"><i class="fa-solid fa-terminal"></i> Conectar</button>
 </div>
 
 <!-- LOADING -->
 <div id="loading-overlay">
-  <div class="loader-title">MEDIAVAULT</div>
-  <div class="loader-sub">Sincronizando com Supabase...</div>
+  <div class="loader-title">MEDIAVAULT // ARCHIVE</div>
+  <div class="loader-sub">[INICIALIZANDO CONEXÃO COM O SUPABASE...]</div>
 </div>
 
 <!-- HEADER -->
 <header id="site-header">
   <div class="header-inner">
     <a href="#" class="site-logo" id="logo-home-btn">
-      <i class="fa-solid fa-layer-group" style="font-size: 1.5rem; color: var(--accent-cyan);"></i>
       MEDIAVAULT
     </a>
-    <span class="header-tagline">Cyber Glass<br>Edition</span>
+    <span class="header-tagline">TACTICAL DOSSIER<br>// SYS.VER.2.0</span>
 
     <div class="search-wrap">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="text" id="search-input" placeholder="Buscar jogo no backlog..." aria-label="Buscar jogo" />
+      <i class="fa-solid fa-terminal"></i>
+      <input type="text" id="search-input" placeholder="BUSCAR CARTUCHO..." aria-label="Buscar jogo" />
     </div>
 
     <nav class="nav-pills" aria-label="Navegação principal">
       <button class="nav-pill active" id="nav-backlog" data-view="backlog">
-        <i class="fa-solid fa-gamepad"></i> Backlog
+        <i class="fa-solid fa-microchip"></i> Backlog
       </button>
       <button class="nav-pill" id="nav-library" data-view="library">
-        <i class="fa-solid fa-book-bookmark"></i> Biblioteca
+        <i class="fa-solid fa-database"></i> Biblioteca
       </button>
     </nav>
 
-    <a href="index.html" class="style-switch-btn" title="Alternar para Estilo Neo-Brutalista">
-      <i class="fa-solid fa-palette"></i> Ver Neo-Brutal
+    <a href="index.html" class="style-switch-btn" title="Alternar para Estilo Neo-Brutal">
+      <i class="fa-solid fa-cube"></i> Estilo Neo-Brutal
     </a>
 
     <button class="header-btn" id="config-btn" title="Configurações e Chaves" aria-label="Configurações">
-      <i class="fa-solid fa-gear"></i>
+      <i class="fa-solid fa-sliders"></i>
     </button>
-    <button class="header-btn" id="theme-toggle" title="Alternar tema claro/escuro" aria-label="Alternar tema">
-      <i class="fa-solid fa-sun"></i>
+    <button class="header-btn" id="theme-toggle" title="Alternar tema" aria-label="Alternar tema">
+      <i class="fa-solid fa-circle-half-stroke"></i>
     </button>
   </div>
 </header>
@@ -72,38 +70,38 @@
   <div id="backlog-section" class="active">
     <section id="focus-section">
       <div class="section-label">
-        <i class="fa-solid fa-crosshairs"></i> Jogando Agora
+        <i class="fa-solid fa-crosshairs"></i> DUAL_BAY_ACTIVE // SLOTS ATIVOS
       </div>
       <h1 class="section-heading">FOCO ATUAL</h1>
       <div class="focus-grid" id="focus-grid"></div>
       <div class="focus-actions">
         <button class="btn btn-accent btn-lg" id="pick-two-btn">
-          <i class="fa-solid fa-shuffle"></i> Trocar Sugestões
+          <i class="fa-solid fa-arrows-rotate"></i> Trocar Sugestões
         </button>
       </div>
     </section>
 
     <div id="genre-sections"></div>
-    <div id="no-results"><i class="fa-solid fa-circle-xmark"></i><p>Nenhum jogo encontrado para "<span id="no-results-query"></span>"</p></div>
+    <div id="no-results"><i class="fa-solid fa-ban"></i><p>[NENHUM REGISTRO ENCONTRADO PARA "<span id="no-results-query"></span>"]</p></div>
     <div id="empty-state" class="empty-state" style="display:none;">
-      <i class="fa-solid fa-box-open"></i>
-      <h3>Backlog Vazio</h3>
-      <p>Nenhum jogo cadastrado no seu banco Supabase. Adicione seus primeiros jogos clicando no botão abaixo.</p>
-      <button class="btn btn-accent btn-lg" id="empty-add-btn"><i class="fa-solid fa-plus"></i> Adicionar Jogo</button>
+      <i class="fa-solid fa-hard-drive"></i>
+      <h3>Terminal Vazio</h3>
+      <p>Nenhum cartucho indexado no banco Supabase.</p>
+      <button class="btn btn-accent btn-lg" id="empty-add-btn"><i class="fa-solid fa-plus"></i> Indexar Cartucho</button>
     </div>
   </div>
 
   <!-- LIBRARY VIEW -->
   <div id="library-section">
-    <div class="section-label"><i class="fa-solid fa-book"></i> Biblioteca Completa</div>
+    <div class="section-label"><i class="fa-solid fa-database"></i> ARCHIVE_TOTAL // REGISTRO COMPLETO</div>
     <h2 class="section-heading">TODOS OS JOGOS</h2>
-    <div id="library-filters" class="nav-pills" style="margin-bottom:28px;flex-wrap:wrap;">
-      <button class="nav-pill active" data-filter="all">Todos</button>
-      <button class="nav-pill" data-filter="backlog"><i class="fa-solid fa-circle" style="color:var(--s-backlog)"></i> Backlog</button>
-      <button class="nav-pill" data-filter="playing"><i class="fa-solid fa-circle" style="color:var(--s-playing)"></i> Jogando</button>
-      <button class="nav-pill" data-filter="completed"><i class="fa-solid fa-circle" style="color:var(--s-completed)"></i> Completado</button>
-      <button class="nav-pill" data-filter="platinum"><i class="fa-solid fa-circle" style="color:var(--s-platinum)"></i> Platinado</button>
-      <button class="nav-pill" data-filter="dropped"><i class="fa-solid fa-circle" style="color:var(--s-dropped)"></i> Abandonado</button>
+    <div id="library-filters" class="nav-pills" style="margin-bottom:24px;flex-wrap:wrap;">
+      <button class="nav-pill active" data-filter="all">TODOS</button>
+      <button class="nav-pill" data-filter="backlog"><i class="fa-solid fa-circle" style="color:var(--s-backlog); font-size: 0.6rem;"></i> Backlog</button>
+      <button class="nav-pill" data-filter="playing"><i class="fa-solid fa-circle" style="color:var(--s-playing); font-size: 0.6rem;"></i> Jogando</button>
+      <button class="nav-pill" data-filter="completed"><i class="fa-solid fa-circle" style="color:var(--s-completed); font-size: 0.6rem;"></i> Completado</button>
+      <button class="nav-pill" data-filter="platinum"><i class="fa-solid fa-circle" style="color:var(--s-platinum); font-size: 0.6rem;"></i> Platinado</button>
+      <button class="nav-pill" data-filter="dropped"><i class="fa-solid fa-circle" style="color:var(--s-dropped); font-size: 0.6rem;"></i> Abandonado</button>
     </div>
     <div id="library-grid" class="games-grid"></div>
   </div>
@@ -113,9 +111,9 @@
 <!-- FABS -->
 <div class="fab-group">
   <button class="fab fab-ai" id="ai-sort-btn" title="Reorganizar por IA">
-    <i class="fa-solid fa-wand-magic-sparkles"></i> Reorganizar por IA
+    <i class="fa-solid fa-wand-magic-sparkles"></i> AI Reorder
   </button>
-  <button class="fab" id="add-game-btn" title="Adicionar jogo">
+  <button class="fab" id="add-game-btn" title="Indexar Novo Cartucho">
     <i class="fa-solid fa-plus"></i>
   </button>
 </div>
@@ -126,18 +124,18 @@
 <div class="modal-overlay" id="add-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="add-modal-title">
   <div class="modal">
     <div class="modal-header">
-      <h2 class="modal-title" id="add-modal-title">Novo Jogo</h2>
+      <h2 class="modal-title" id="add-modal-title">// INDEXAR CARTUCHO</h2>
       <button class="modal-close" id="add-modal-close" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="modal-body">
       <form id="add-game-form" novalidate>
         <div class="form-group">
-          <label class="form-label" for="form-title">Título do Jogo *</label>
+          <label class="form-label" for="form-title">TÍTULO DO JOGO *</label>
           <input type="text" class="form-input" id="form-title" placeholder="Ex: Resident Evil 4 Remake" required />
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label" for="form-genre">Gênero *</label>
+            <label class="form-label" for="form-genre">GÊNERO *</label>
             <input type="text" class="form-input" id="form-genre" placeholder="Ex: Survival Horror" list="genre-suggestions" required />
             <datalist id="genre-suggestions">
               <option value="Action"><option value="Action-Adventure"><option value="Fighting">
@@ -149,7 +147,7 @@
             </datalist>
           </div>
           <div class="form-group">
-            <label class="form-label" for="form-platform">Plataforma</label>
+            <label class="form-label" for="form-platform">PLATAFORMA</label>
             <input type="text" class="form-input" id="form-platform" placeholder="Ex: PS5" list="platform-suggestions" />
             <datalist id="platform-suggestions">
               <option value="PC"><option value="PS4"><option value="PS5">
@@ -159,26 +157,26 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">Tags de Similaridade</label>
+          <label class="form-label">TAGS DE SIMILARIDADE</label>
           <div class="tags-wrap" id="tags-wrap">
             <input type="text" class="tag-input" id="tag-input" placeholder="Ex: horror, survival (Enter para adicionar)" />
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label" for="form-weight">Intensidade</label>
+          <label class="form-label" for="form-weight">NÍVEL DE INTENSIDADE</label>
           <select class="form-select" id="form-weight">
-            <option value="heavy">Pesado (intenso, longo, exige concentração)</option>
-            <option value="medium" selected>Médio</option>
-            <option value="light">Leve (casual, relaxante, sessões curtas)</option>
+            <option value="heavy">[PWR: HEAVY] — Intenso / Foco Alto / Desafiador</option>
+            <option value="medium" selected>[PWR: MEDIUM] — Equilibrado</option>
+            <option value="light">[PWR: LIGHT] — Casual / Relaxante / Sessões Rápidas</option>
           </select>
         </div>
         <div class="form-group">
-          <label class="form-label" for="form-cover">URL da Capa</label>
+          <label class="form-label" for="form-cover">URL DA BOXART</label>
           <input type="url" class="form-input" id="form-cover" placeholder="https://..." />
           <img id="cover-preview-img" alt="Preview da capa" />
         </div>
         <div class="form-group">
-          <label class="form-label" for="form-status">Status</label>
+          <label class="form-label" for="form-status">STATUS NO BANCO</label>
           <select class="form-select" id="form-status">
             <option value="backlog">Backlog</option>
             <option value="playing">Jogando</option>
@@ -188,13 +186,13 @@
           </select>
         </div>
         <div class="form-group">
-          <label class="form-label" for="form-notes">Notas Pessoais</label>
-          <textarea class="form-textarea" id="form-notes" placeholder="Suas impressões, onde parou, etc."></textarea>
+          <label class="form-label" for="form-notes">LOGS & ANOTAÇÕES</label>
+          <textarea class="form-textarea" id="form-notes" placeholder="Logs de progresso, impressões, etc."></textarea>
         </div>
         <div class="form-footer">
           <button type="button" class="btn" id="add-modal-cancel">Cancelar</button>
           <button type="submit" class="btn btn-accent btn-lg" id="save-game-btn">
-            <i class="fa-solid fa-floppy-disk"></i> Salvar no Supabase
+            <i class="fa-solid fa-floppy-disk"></i> Gravar no Supabase
           </button>
         </div>
       </form>
@@ -206,7 +204,7 @@
 <div class="modal-overlay" id="detail-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="detail-modal-title">
   <div class="modal modal-lg">
     <div class="modal-header">
-      <h2 class="modal-title" id="detail-modal-title">Detalhes</h2>
+      <h2 class="modal-title" id="detail-modal-title">// DOSSIER DO JOGO</h2>
       <button class="modal-close" id="detail-modal-close" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="modal-body">
@@ -219,11 +217,11 @@
           <h3 id="detail-title" class="detail-title"></h3>
           <div class="detail-meta" id="detail-meta"></div>
           <div id="detail-notes-wrap" style="display:none;">
-            <div class="form-label" style="margin-bottom:6px;">Notas</div>
+            <div class="form-label" style="margin-bottom:6px;">LOGS DE ANOTAÇÕES</div>
             <div id="detail-notes" class="detail-notes"></div>
           </div>
           <div>
-            <div class="form-label" style="margin-bottom:8px;">Alterar Status (Supabase)</div>
+            <div class="form-label" style="margin-bottom:8px;">ALTERAR STATUS // SUPABASE</div>
             <div class="status-picker" id="status-picker">
               <button class="status-btn" data-status="backlog"><i class="fa-solid fa-clock"></i> Backlog</button>
               <button class="status-btn" data-status="playing"><i class="fa-solid fa-play"></i> Jogando</button>
@@ -233,7 +231,7 @@
             </div>
           </div>
           <div class="detail-actions">
-            <button class="btn btn-accent" id="detail-set-focus-btn"><i class="fa-solid fa-crosshairs"></i> Colocar em Foco</button>
+            <button class="btn btn-accent" id="detail-set-focus-btn"><i class="fa-solid fa-crosshairs"></i> Inserir no Foco</button>
             <button class="btn" id="detail-edit-btn"><i class="fa-solid fa-pen"></i> Editar</button>
             <button class="btn btn-danger" id="detail-delete-btn"><i class="fa-solid fa-trash"></i> Excluir</button>
           </div>
@@ -243,62 +241,42 @@
   </div>
 </div>
 
-<!-- MODAL: PICK TWO -->
-<div class="modal-overlay" id="pick-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="pick-modal-title">
-  <div class="modal modal-lg">
-    <div class="modal-header">
-      <h2 class="modal-title" id="pick-modal-title">Escolher Dupla</h2>
-      <button class="modal-close" id="pick-modal-close" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    <div class="modal-body">
-      <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:16px;">
-        <i class="fa-solid fa-circle-info" style="color:var(--accent-cyan);"></i>
-        &nbsp;Um jogo <strong>pesado</strong> e um <strong>leve</strong> — estilos contrastantes atualizados no Supabase.
-      </p>
-      <div class="pick-two-grid" id="pick-two-grid"></div>
-      <div class="form-footer">
-        <button class="btn" id="pick-modal-shuffle"><i class="fa-solid fa-shuffle"></i> Outra Dupla</button>
-        <button class="btn btn-accent btn-lg" id="pick-modal-confirm"><i class="fa-solid fa-check"></i> Confirmar Dupla</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- MODAL: AI -->
 <div class="modal-overlay" id="ai-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="ai-modal-title">
   <div class="modal">
     <div class="modal-header">
-      <h2 class="modal-title" id="ai-modal-title">Reorganizar por IA</h2>
+      <h2 class="modal-title" id="ai-modal-title">// AI REORDER PROTOCOL</h2>
       <button class="modal-close" id="ai-modal-close" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="modal-body">
-      <div id="ai-thinking-state" class="ai-thinking" style="display:none;">
-        <div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div>
+      <div id="ai-thinking-state" class="ai-thinking" style="display:none; text-align:center; padding: 20px; font-family: var(--font-mono); color: var(--amber);">
+        <i class="fa-solid fa-circle-notch fa-spin fa-2x" style="margin-bottom: 12px; display:block;"></i>
+        [PROCESSANDO ALGORITMO TEMÁTICO COM GEMINI AI...]
       </div>
       <div id="ai-idle-state">
-        <p style="font-size:0.92rem;color:var(--text-muted);margin-bottom:16px;">
-          O Gemini vai analisar os jogos do seu Supabase e reorganizá-los por semelhança temática. A nova ordem e sua chave são salvas diretamente no Supabase.
+        <p style="font-family: var(--font-mono); font-size:0.85rem; color:var(--text-muted); margin-bottom:16px; line-height: 1.5;">
+          A inteligência artificial vai agrupar seus jogos por afinidade temática e sequência ideal de gameplay. Chaves e ordenação são sincronizadas diretamente no Supabase.
         </p>
         <div class="form-group">
-          <label class="form-label" for="ai-key-input">Gemini API Key (Salva no Supabase)</label>
+          <label class="form-label" for="ai-key-input">GEMINI API KEY [SUPABASE SETTINGS]</label>
           <input type="password" class="form-input" id="ai-key-input" placeholder="AIzaSy..." />
-          <small style="font-size:0.75rem;color:var(--text-subtle);margin-top:6px;display:block;">
-            <i class="fa-solid fa-cloud"></i> Sincronizada na tabela <code>settings</code> do seu Supabase.
+          <small style="font-family:var(--font-mono); font-size:0.7rem; color:var(--text-dim); margin-top:6px; display:block;">
+            <i class="fa-solid fa-lock"></i> Chave criptografada e armazenada na tabela <code>settings</code> do Supabase.
           </small>
         </div>
         <div class="form-footer">
           <button class="btn" id="ai-modal-cancel">Cancelar</button>
           <button class="btn btn-purple btn-lg" id="ai-run-btn">
-            <i class="fa-solid fa-wand-magic-sparkles"></i> Reorganizar Agora
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Executar Reordenação
           </button>
         </div>
       </div>
       <div id="ai-result-state" style="display:none;">
-        <p style="font-size:0.88rem;font-weight:700;color:var(--text-muted);margin-bottom:6px;">Nova ordem sugerida pela IA:</p>
-        <ul class="ai-result-list" id="ai-result-list"></ul>
+        <p style="font-family:var(--font-mono); font-size:0.82rem; font-weight:700; color:var(--amber); margin-bottom:8px;">// SEQUÊNCIA SUGERIDA PELA IA:</p>
+        <ul class="ai-result-list" id="ai-result-list" style="list-style:none; display:flex; flex-direction:column; gap:6px;"></ul>
         <div class="form-footer">
           <button class="btn" id="ai-result-cancel">Cancelar</button>
-          <button class="btn btn-success btn-lg" id="ai-apply-btn"><i class="fa-solid fa-check"></i> Salvar Ordem no Supabase</button>
+          <button class="btn btn-accent btn-lg" id="ai-apply-btn"><i class="fa-solid fa-check"></i> Gravar Nova Ordem</button>
         </div>
       </div>
     </div>
@@ -309,24 +287,24 @@
 <div class="modal-overlay" id="config-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="config-modal-title">
   <div class="modal">
     <div class="modal-header">
-      <h2 class="modal-title" id="config-modal-title">Configurações</h2>
+      <h2 class="modal-title" id="config-modal-title">// TERMINAL CONFIG</h2>
       <button class="modal-close" id="config-modal-close" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="modal-body">
       <form id="config-form">
         <div class="form-group">
-          <label class="form-label" for="cfg-supabase-url">Supabase Project URL *</label>
+          <label class="form-label" for="cfg-supabase-url">SUPABASE PROJECT URL *</label>
           <input type="url" class="form-input" id="cfg-supabase-url" placeholder="https://xyzcompany.supabase.co" required />
         </div>
         <div class="form-group">
-          <label class="form-label" for="cfg-supabase-key">Supabase Anon Key *</label>
+          <label class="form-label" for="cfg-supabase-key">SUPABASE ANON KEY *</label>
           <input type="password" class="form-input" id="cfg-supabase-key" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." required />
         </div>
         <div class="form-group">
-          <label class="form-label" for="cfg-gemini-key">Gemini AI API Key (Opcional)</label>
+          <label class="form-label" for="cfg-gemini-key">GEMINI AI API KEY (OPCIONAL)</label>
           <input type="password" class="form-input" id="cfg-gemini-key" placeholder="AIzaSy..." />
-          <small style="font-size:0.75rem;color:var(--text-subtle);margin-top:4px;display:block;">
-            <i class="fa-solid fa-database"></i> A chave da IA é sincronizada na tabela <code>settings</code> do Supabase.
+          <small style="font-family:var(--font-mono); font-size:0.7rem; color:var(--text-dim); margin-top:4px; display:block;">
+            <i class="fa-solid fa-database"></i> Sincronizada na tabela <code>settings</code> do Supabase.
           </small>
         </div>
         <div class="form-footer">
